@@ -1,4 +1,5 @@
 const net = require('net');
+const desiredFilename = process.argv[2];
 
 const conn = net.createConnection({
   host: 'localhost',
@@ -12,5 +13,5 @@ conn.on('data', (data) => {
 });
 
 conn.on('connect', () => {
-  conn.write('I will eventually want to ask you for a file');
+  conn.write(`Yo. I want ${desiredFilename}`);
 });
