@@ -1,4 +1,5 @@
 const net = require('net');
+const fs = require('fs');
 const server = net.createServer();
 
 server.on('connection', (client) => {
@@ -8,7 +9,8 @@ server.on('connection', (client) => {
   client.on('data', (data) => {
     if (data.match(/^iCanHaz: /)) {
       const filename = data.match(/^iCanHaz: (.*)$/)[1];
-      client.write(`Oh, so you want ${filename}, eh?`);
+      const fileStream = fs.createReadStream(filename);
+      fileStream.pipe(client);
     }
   });
 });
