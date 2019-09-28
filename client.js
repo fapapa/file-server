@@ -13,5 +13,5 @@ conn.on('data', (data) => {
 });
 
 conn.on('connect', () => {
-  conn.write(`Yo. I want ${desiredFilename}`);
+  conn.write(`iCanHaz: ${desiredFilename}`);
 });
