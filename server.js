@@ -11,6 +11,11 @@ server.on('connection', (client) => {
       const filename = data.match(/^iCanHaz: (.*)$/)[1];
       const fileStream = fs.createReadStream(filename);
       fileStream.pipe(client);
+
+      fileStream.on('error', (err) => {
+        client.write(`nah: ${err}\n`);
+        client.destroy();
+      });
     }
   });
 });
