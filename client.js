@@ -1,4 +1,5 @@
 const net = require('net');
+const fs = require('fs');
 const desiredFilename = process.argv[2];
 
 const conn = net.createConnection({
@@ -8,8 +9,9 @@ const conn = net.createConnection({
 
 conn.setEncoding('utf8');
 
-conn.on('data', (data) => {
-  console.log('Server says:', data);
+conn.on('data', () => {
+  const fileStream = fs.createWriteStream(`./saved/${desiredFilename}`);
+  conn.pipe(fileStream);
 });
 
 conn.on('connect', () => {
