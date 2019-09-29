@@ -9,9 +9,13 @@ const conn = net.createConnection({
 
 conn.setEncoding('utf8');
 
-conn.on('data', () => {
-  const fileStream = fs.createWriteStream(`./saved/${desiredFilename}`);
-  conn.pipe(fileStream);
+conn.on('data', (data) => {
+  if (data.match(/^nah: /)) {
+    console.error("No such cheezbrgr");
+  } else {
+    const fileStream = fs.createWriteStream(`./saved/${desiredFilename}`);
+    conn.pipe(fileStream);
+  }
 });
 
 conn.on('connect', () => {

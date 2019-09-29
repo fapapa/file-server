@@ -3,7 +3,6 @@ const fs = require('fs');
 const server = net.createServer();
 
 server.on('connection', (client) => {
-  client.write('Connected!');
   client.setEncoding('utf8');
 
   client.on('data', (data) => {
@@ -14,7 +13,11 @@ server.on('connection', (client) => {
 
       fileStream.on('error', (err) => {
         client.write(`nah: ${err}\n`);
-        client.destroy();
+        client.end();
+      });
+
+      fileStream.on('close', () => {
+        client.end();
       });
     }
   });
